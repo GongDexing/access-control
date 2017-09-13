@@ -26,7 +26,7 @@ public class RoleHelper {
         ResourcePatternResolver rpr = new PathMatchingResourcePatternResolver();
         Resource[] resources = rpr.getResources("**/*.class");
         for (Resource resource : resources) {
-            String path = resource.getURL().getPath().split("classes\\/")[1];
+            String path = resource.getURL().getPath().split("classes!?\\/")[1];
             String className = path.replaceAll("\\/", ".").replace(".class", "");
             Class<?> clazz = Class.forName(className);
             String controllerRequestMappingStr = "";
@@ -51,25 +51,25 @@ public class RoleHelper {
 
     private void addRequestToRole(String controllerRequestMappingStr,
             RequestMapping methodRequestMapping, String role) {
-        String mapping = controllerRequestMappingStr + methodRequestMapping.path()[0];
+        String path = controllerRequestMappingStr + methodRequestMapping.path()[0];
         RequestMethod[] requestMethods = methodRequestMapping.method();
         if (requestMethods.length == 0) {
-            roleRequests.add(role + " get " + mapping);
-            roleRequests.add(role + " post " + mapping);
+            roleRequests.add(role + " get " + path);
+            roleRequests.add(role + " post " + path);
         } else {
             for (RequestMethod requestMethod : requestMethods) {
                 switch (requestMethod) {
                     case GET:
-                        roleRequests.add(role + " get " + mapping);
+                        roleRequests.add(role + " get " + path);
                         break;
                     case POST:
-                        roleRequests.add(role + " post " + mapping);
+                        roleRequests.add(role + " post " + path);
                         break;
                     case PUT:
-                        roleRequests.add(role + " put " + mapping);
+                        roleRequests.add(role + " put " + path);
                         break;
                     case DELETE:
-                        roleRequests.add(role + " delete " + mapping);
+                        roleRequests.add(role + " delete " + path);
                         break;
                     default:
                         break;
