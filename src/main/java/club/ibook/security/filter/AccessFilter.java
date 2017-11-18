@@ -37,7 +37,7 @@ public class AccessFilter implements Filter {
         String role = httpRequest.getHeader("role");
         String method = httpRequest.getMethod().toLowerCase();
         String mapping = httpRequest.getServletPath();
-        if (role == null || !roleHelper.isHasRoleAccess(role, method, mapping)) {
+        if (!roleHelper.isHasRoleAccess(role, method, mapping)) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "not authorized");
         } else {

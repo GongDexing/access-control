@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import club.ibook.security.annotation.AllowAnonymous;
 import club.ibook.security.annotation.UserRole;
 
 @RestController
@@ -25,5 +26,11 @@ public class TestController {
     @RequestMapping(path = "/no", method = RequestMethod.GET)
     public String no() {
         return "no";
+    }
+
+    @AllowAnonymous
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public String all() {
+        return "all";
     }
 }
